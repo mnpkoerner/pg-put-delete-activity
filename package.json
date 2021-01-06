@@ -1,7 +1,7 @@
 {
   "name": "antares_pg_intro",
   "version": "1.0.0",
-  "description": "",
+  "description": "Welcome to Awesome Reads!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,8 +15,13 @@
   "homepage": "https://github.com/PrimeAcademy/antares_pg_intro#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "jquery": "^3.3.1",
-    "pg": "^8.2.1"
-  }
+    "pg": "^8.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mnpkoerner/pg-put-delete-activity.git"
+  },
+  "keywords": []
 }
