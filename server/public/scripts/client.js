@@ -7,9 +7,30 @@ $(document).ready(function () {
 function addClickHandlers() {
   $('#submitBtn').on('click', handleSubmit);
   $(document).on('click', '.deleteButton', deleteBook)
+  $(document).on('click', '.readButton', markAsRead)
   // TODO - Add code for edit & delete buttons
 }
-
+//function to update status in "books", will change status to read with PUT
+//then will update DOM with new information from database
+function markAsRead() {
+  console.log('in mark func');
+  const id = $(this).data('id');
+  console.log(id);
+  const dataToSend = {
+    read: 'Read'
+  }
+  $.ajax({
+    type: 'PUT',
+    url: `/books/${id}`,
+    data: dataToSend
+  }).then(function (response) {
+    console.log('updated');
+    refreshBooks();
+  }).catch(function (error) {
+    alert('error updating read')
+    console.log(error)
+  })
+}
 //function to remove book from database, append DOM with new information
 function deleteBook() {
   console.log('in delete')
@@ -18,10 +39,10 @@ function deleteBook() {
   $.ajax({
     type: 'DELETE',
     url: `/books/${id}`
-  }).then(function(response){
+  }).then(function (response) {
     console.log(response)
     refreshBooks()
-  }).catch(function(error){
+  }).catch(function (error) {
     console.log(error);
     alert('error deleting book');
   })
@@ -70,11 +91,17 @@ function renderBooks(books) {
 
   for (let i = 0; i < books.length; i += 1) {
     let book = books[i];
+    let status;
+    if (book.status === 'Want to Read') {
+      status = "checked"
+    }
     // For each book, append a new row to our table
     let $tr = $('<tr></tr>');
     $tr.data('book', book);
     $tr.append(`<td>${book.title}</td>`);
     $tr.append(`<td>${book.author}</td>`);
+    $tr.append(`<td>${book.status}</td>`);
+    $tr.append(`<td class="readButton" data-id="${books[i].id}"><button>Mark as Read</button>`)
     $tr.append(`<td class="deleteButton" data-id="${books[i].id}"><button>DELETE</button>`)
     $('#bookShelf').append($tr);
   }
