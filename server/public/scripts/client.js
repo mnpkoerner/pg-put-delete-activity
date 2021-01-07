@@ -91,10 +91,7 @@ function renderBooks(books) {
 
   for (let i = 0; i < books.length; i += 1) {
     let book = books[i];
-    let status;
-    if (book.status === 'Want to Read') {
-      status = "checked"
-    }
+
     // For each book, append a new row to our table
     let $tr = $('<tr></tr>');
     $tr.data('book', book);
@@ -105,4 +102,5 @@ function renderBooks(books) {
     $tr.append(`<td class="deleteButton" data-id="${books[i].id}"><button>DELETE</button>`)
     $('#bookShelf').append($tr);
   }
+  $('input').val('');
 }
