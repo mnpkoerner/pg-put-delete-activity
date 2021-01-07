@@ -1,6 +1,6 @@
 # Awesome Reads
 
-Welcome to Awesome Reads! 
+Welcome to Awesome Reads!
 
 We need your help adding some new features to our application. Our users want to be able to mark books as read and delete books they no longer want to read.
 
@@ -8,9 +8,9 @@ Get started by taking a look at our existing code, and getting the current appli
 
 ## Database Setup
 
-You'll need to create a database called `awesome_reads`. 
+[x] You'll need to create a database called `awesome_reads`.
 
-Use the provided `database.sql` file to create the `books` table and setup some test data.
+[x]Use the provided `database.sql` file to create the `books` table and setup some test data.
 
 ## Base Mode
 
@@ -20,14 +20,14 @@ Users want to be able to remove a book from the book list.  Add a `Delete` butto
 
 ### Update a book
 
-Users also want to be able to mark a book as read. The database has already been setup with a status column, but this is not currently shown on the page. Update the book list display to show if a book has been read or not. 
+Users also want to be able to mark a book as read. The database has already been setup with a status column, but this is not currently shown on the page. Update the book list display to show if a book has been read or not.
 
-Add another button to each book allowing the user to `Mark as Read`. Again, starter code is provided in the `book.router.js`. When a book has been read, the status should be changed to `Read`. 
+Add another button to each book allowing the user to `Mark as Read`. Again, starter code is provided in the `book.router.js`. When a book has been read, the status should be changed to `Read`.
 
 ### Task list
 
 - [ ] DELETE & PUT AJAX calls
-- [ ] DELETE & PUT SERVER SIDE 
+- [ ] DELETE & PUT SERVER SIDE
 - [ ] Page should refresh with up to date data after a DELETE or PUT
 
 
@@ -54,14 +54,11 @@ When the submit button is clicked:
 ### Additional Features
 
 - [ ] Add validation to the add input form
-    - The client side code should make sure that required fields are filled in. You can do this by making the HTML inputs required. Make sure to do something so the user can tell which fields are required. 
+    - The client side code should make sure that required fields are filled in. You can do this by making the HTML inputs required. Make sure to do something so the user can tell which fields are required.
     - The server side should also check that it gets all required fields. If required fields are missing, send back a 500 status.
 - [ ] Add a way to change the order in which books are shown - sort by title vs sort by author
 - [ ] Improve the styling of the page -- Bootstrap & CSS
     - [ ] Improve the table layout. Give alternating rows a difference in color
-    - [ ] Make the buttons more UX friendly -- Red for delete, etc. Green for save/submit. 
+    - [ ] Make the buttons more UX friendly -- Red for delete, etc. Green for save/submit.
     - [ ] Make the page responsive -- Bootstrap Grid & Containers will be helpful!
 - [ ] Add the ability to store and show one or more of the following when marking a book as complete: the date completed, a rating, and comments.  You'll have to change many things across the full stack!
-
-
-
