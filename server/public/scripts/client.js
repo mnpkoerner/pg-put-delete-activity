@@ -8,7 +8,51 @@ function addClickHandlers() {
   $('#submitBtn').on('click', handleSubmit);
   $(document).on('click', '.deleteButton', deleteBook)
   $(document).on('click', '.readButton', markAsRead)
+  $(document).on('click', '.editButton', beginEdit)
   // TODO - Add code for edit & delete buttons
+}
+//this function should toggle edit mode on and off.
+//DOM should indicate that the inputs are now in edit mode
+//Create new submit button in place of old submit button?
+//New submit button should send changes to database and then update DOM
+let editMode = false;
+function beginEdit() {
+  console.log('in edit')
+  //edit mode becomes TRUE, and we send the unique ID into the EDIT mode
+  //we'll use the unique ID to target the specific inputs. We should do
+  //a GET request to populate the inputs with data from the database
+  editMode = true;
+  let id = $(this).data('id');
+  if (editMode === true) {
+    renderDomInEdit(id);
+  }
+}
+
+function renderDomInEdit(uniqueID) {
+  //now we're in edit mode, we should do a get request and store
+  //the data from the database in the input fields
+  //AND
+  //change the header to say EDIT MODE?
+  //then, when the submit button is clicked again,
+  //we send the data to the dom with a PUT request
+  //and update the ENTIRE entry
+  let id = { data: uniqueID };
+  console.log('in DOM reRender')
+  console.log(id)
+  $.ajax({
+    type: 'POST',
+    url: '/books/edit',
+    data: id
+  }).then(function (response) {
+    console.log(response);
+    editInputValues(response);
+  })
+  //after submit button clicked, DOM should reset, reassign editMode to false;
+}
+
+function editInputValues(data) {
+  $('#title').val(`${data[0].title}`);
+  $('#author').val(`${data[0].author}`);
 }
 //function to update status in "books", will change status to read with PUT
 //then will update DOM with new information from database
@@ -99,7 +143,8 @@ function renderBooks(books) {
     $tr.append(`<td>${book.author}</td>`);
     $tr.append(`<td>${book.status}</td>`);
     $tr.append(`<td class="readButton" data-id="${books[i].id}"><button>Mark as Read</button>`)
-    $tr.append(`<td class="deleteButton" data-id="${books[i].id}"><button>DELETE</button>`)
+    $tr.append(`<td><button class="editButton" data-id="${books[i].id}">EDIT</button>`)
+    $tr.append(`<td><button class="deleteButton" data-id="${books[i].id}">DELETE</button>`)
     $('#bookShelf').append($tr);
   }
   $('input').val('');
