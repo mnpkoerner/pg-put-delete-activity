@@ -47,6 +47,31 @@ router.post('/', (req, res) => {
     });
 });
 
+//new PUT, for edit mode
+router.put('/change/:id', (req, res) => {
+  console.log('in edit server');
+  const id = req.params.id;
+  console.log(id)
+  const edit = req.body
+  //now edit is an object with new {author:..., title:...}
+  const queryText = `
+    UPDATE "books"
+    SET "author" = $1, "title" = $2
+    WHERE "id" = $3;
+  `
+  pool.query(queryText, [edit.author, edit.title, id])
+    .then((result) => {
+      console.log(result);
+      //result is meaningless, only care about yay! or NO!
+      //DELETES GET 200 (ok) or 204 (no content)
+      res.sendStatus(200);
+    }).catch((error) => {
+      //even when things go wrong, send a response to client
+      console.log(error);
+      res.sendStatus(500);
+    });
+})
+
 // TODO - PUT
 // Updates a book to show that it has been read
 // Request must include a parameter indicating what book to update - the id

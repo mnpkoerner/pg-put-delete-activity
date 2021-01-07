@@ -9,6 +9,8 @@ function addClickHandlers() {
   $(document).on('click', '.deleteButton', deleteBook)
   $(document).on('click', '.readButton', markAsRead)
   $(document).on('click', '.editButton', beginEdit)
+  $(document).on('click', '#submitEdit', submitEdit)
+  $(document).on('click', '#cancelEdit', cancelEdit)
   // TODO - Add code for edit & delete buttons
 }
 //this function should toggle edit mode on and off.
@@ -49,10 +51,41 @@ function renderDomInEdit(uniqueID) {
   })
   //after submit button clicked, DOM should reset, reassign editMode to false;
 }
-
+//takes info from database and populates, adds data to submit button
+//to send back edited data to server as PUT request
 function editInputValues(data) {
   $('#title').val(`${data[0].title}`);
   $('#author').val(`${data[0].author}`);
+  $("#editTarget").append(`
+    <button type="button" id="submitEdit" data-id="${data[0].id}">Submit Edit</button>
+    <button type="button" id="cancelEdit">Cancel Edit</button>`
+  )
+}
+function submitEdit() {
+  console.log('pre edit submit')
+  const id = $(this).data('id');
+  console.log(id)
+  const sendData = {
+    author: $('#author').val(),
+    title: $('#title').val()
+  }
+  $.ajax({
+    type: 'PUT',
+    url: `/books/change/${id}`,
+    data: sendData
+  }).then(function (response) {
+    console.log(response);
+    refreshBooks();
+    cancelEdit();
+  }).catch(function (error) {
+    alert('error editing!')
+    console.log(error);
+  })
+}
+//cancell edit refreshes the DOM and deletes the buttons from EDIT mode
+function cancelEdit() {
+  $('#editTarget').empty();
+  refreshBooks();
 }
 //function to update status in "books", will change status to read with PUT
 //then will update DOM with new information from database
